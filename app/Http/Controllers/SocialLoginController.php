@@ -18,17 +18,6 @@ class SocialLoginController extends Controller
     {
         $socialUser = Socialite::driver($provider)->user();
 
-        // $user = User::updateOrCreate([
-        //     'provider_id' => $socialUser->id,
-        // ], [
-        //     'name' => $socialUser->name,
-        //     'nickname' => $socialUser->nickname,
-        //     'email' => $socialUser->email,
-        //     'provider' => $provider,
-        //     'provider_token' => $socialUser->token,
-        //     'role' => 'user'
-        // ]);
-
         $user = User::where('email', $socialUser->email)->first();
 
         if ($user) {

@@ -6,10 +6,11 @@ use App\Http\Controllers\SocialLoginController;
 
 require_once __DIR__.'/user.php';
 require_once __DIR__.'/admin.php';
+require __DIR__.'/auth.php';
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('authentication.login');
 });
 
 Route::get('/dashboard', function () {
@@ -22,9 +23,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
-
 //goole login - github login
-
-Route::get('/auth/{provider}/redirect',[SocialLoginController::class,'redirect']);
-Route::get('/auth/{provider}/callback',[SocialLoginController::class,'callback']);
+Route::get('/auth/{provider}/redirect',[SocialLoginController::class,'redirect'])->name('socialLogin');
+Route::get('/auth/{provider}/callback',[SocialLoginController::class,'callback'])->name('socialCallback');
