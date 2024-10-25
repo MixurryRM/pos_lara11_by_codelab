@@ -85,7 +85,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa-solid fa-lock"></i></i></i><span>Change Password
+                <a class="nav-link" href="{{ route('changePasswordPage') }}"><i class="fa-solid fa-lock"></i></i></i><span>Change Password
                     </span></a>
             </li>
 
@@ -133,16 +133,17 @@
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('changePasswordPage') }}">
                                     <i class="fa-solid fa-lock fa-sm fa-fw mr-2 text-gray-400"></i></i></i>
                                     Change Password
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                    data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                <span class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <input type="submit" value="Logout" class="w-100 btn btn-dark text-white">
+                                    </form>
+                                </span>
                             </div>
                         </li>
 

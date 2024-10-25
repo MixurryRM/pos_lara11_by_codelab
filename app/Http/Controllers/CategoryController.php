@@ -68,7 +68,7 @@ class CategoryController extends Controller
     }
 
     //check category validation
-    public function checkValidation($request)
+    private function checkValidation($request)
     {
         $request->validate([
             'categoryName' => 'required'
