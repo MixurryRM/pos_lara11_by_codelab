@@ -8,6 +8,6 @@ class AdminController extends Controller
 {
     //direct to admin dashboard
     public function adminDashboard(){
-        return view('admin.home.list');
+        return view('admin.home.index');
     }
 }
