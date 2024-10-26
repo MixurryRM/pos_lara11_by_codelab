@@ -11,6 +11,19 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfileController extends Controller
 {
+    //direct account profile
+    public function accountProfile()
+    {
+        return view("profile.accountProfile");
+    }
+
+    //account edit
+    public function accountEdit()
+    {
+        $userData = Auth::user();
+        return view("profile.accountEdit", compact('userData'));
+    }
+
     //change password page
     public function changePasswordPage()
     {
@@ -20,7 +33,7 @@ class ProfileController extends Controller
     public function changePassword(Request $request)
     {
         $fields = $request->validate([
-            'currentPassword' => 'required|min:6|max:15',
+            'currentPassword' => 'required',
             'newPassword' => 'required|min:6|max:12',
             'confirmPassword' => 'required|same:newPassword'
         ]);
