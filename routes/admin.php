@@ -24,10 +24,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     //profile
     Route::group(['prefix' => 'profile'], function () {
-
         Route::get('changePassword', [ProfileController::class, 'changePasswordPage'])->name('changePasswordPage');
         Route::post('changePassword', [ProfileController::class, 'changePassword'])->name('changePassword');
         Route::get('accountProfile', [ProfileController::class, 'accountProfile'])->name('accountProfile');
         Route::get('accountEdit', [ProfileController::class, 'accountEdit'])->name('accountEdit');
+        Route::post('accountUpdate',[ProfileController::class,'accountUpdate'])->name('accountUpdate');
     });
 });

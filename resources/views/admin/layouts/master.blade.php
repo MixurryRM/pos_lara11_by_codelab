@@ -85,7 +85,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('changePasswordPage') }}"><i class="fa-solid fa-lock"></i></i></i><span>Change Password
+                <a class="nav-link" href="{{ route('changePasswordPage') }}"><i
+                        class="fa-solid fa-lock"></i></i></i><span>Change Password
                     </span></a>
             </li>
 
@@ -119,8 +120,10 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                <img class="img-profile rounded-circle" src="{{ asset('admin/img/undraw_profile.svg') }}">
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{{ asset(Auth::user()->profile == null ? 'admin/img/undraw_profile.svg' : 'storage/profile/' . Auth::user()->profile) }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -200,6 +203,17 @@
                 <script src="{{ asset('admin/js/demo/chart-area-demo.js') }}"></script>
                 <script src="{{ asset('admin/js/demo/chart-pie-demo.js') }}"></script>
 
+                <!--image preview javascript -->
+                <script>
+                    var loadFile = function(event) {
+                        // Get the img element by id
+                        var output = document.getElementById('previewImage');
+                        output.src = URL.createObjectURL(event.target.files[0]);
+                        output.onload = function() {
+                            URL.revokeObjectURL(output.src); // Free memory
+                        };
+                    };
+                </script>
 </body>
 
 </html>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProfileController extends Controller
@@ -17,11 +18,49 @@ class ProfileController extends Controller
         return view("profile.accountProfile");
     }
 
-    //account edit
+    //account edit page
     public function accountEdit()
     {
         $userData = Auth::user();
         return view("profile.accountEdit", compact('userData'));
+    }
+
+    public function accountUpdate(Request $request)
+    {
+        $userId = Auth::id();
+
+        $fields = $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users,email,' . $userId,
+            'phone' => 'required|min:8|max:15|unique:users,phone,' . $userId,
+            'address' => 'required',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:5120', // max 5MB
+        ]);
+
+        if ($request->hasFile('image')) {
+            $user = User::find($userId);
+
+            // Check if there's an existing image to delete
+            if ($user->profile) {
+                Storage::disk('public')->delete('profile/' . $user->profile);
+            }
+
+
+            // Store new image with unique name
+            $fileName = uniqid() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('profile', $fileName, 'public');
+            $fields['profile'] = $fileName;
+        }
+
+        unset($fields['image']);
+
+        // Update user profile with validated data
+        User::where('id', $userId)->update($fields);
+
+        // Success alert
+        Alert::success('Profile Change', 'Profile Changed Successfully!');
+
+        return to_route('accountProfile');
     }
 
     //change password page

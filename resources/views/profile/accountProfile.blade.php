@@ -12,7 +12,7 @@
                             <div class="mb-3 text-center">
                                 <div class="d-flex justify-content-center mb-3">
                                     <img id="profileImagePreview"
-                                        src="{{ asset(Auth::user()->image == null ? 'admin/img/undraw_profile.svg' : 'profile/' . Auth::user()->profile) }}"
+                                        src="{{ asset(Auth::user()->profile == null ? 'admin/img/undraw_profile.svg' : 'storage/profile/' . Auth::user()->profile) }}"
                                         alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px;">
                                 </div>
                             </div>
