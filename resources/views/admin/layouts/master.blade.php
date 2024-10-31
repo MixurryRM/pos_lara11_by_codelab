@@ -132,10 +132,12 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
+                                @if (Auth::user()->role == 'superadmin')
+                                    <a class="dropdown-item" href="{{ route('newAdminPage') }}">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Add New Admin
+                                    </a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('changePasswordPage') }}">
                                     <i class="fa-solid fa-lock fa-sm fa-fw mr-2 text-gray-400"></i></i></i>
                                     Change Password

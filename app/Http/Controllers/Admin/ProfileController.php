@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Rules\Password;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,37 @@ class ProfileController extends Controller
     public function accountProfile()
     {
         return view("profile.accountProfile");
+    }
+
+    //direct new admin add page
+    public function newAdminPage()
+    {
+        return view("admin.adminAccount.create");
+    }
+
+    //create new admin account
+    public function createAdminAccount(Request $request)
+    {
+        $fields = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required','email','unique:users,email'],
+            'phone' => ['required','min:8','max:15','unique:users,phone'],
+            'password' => ['required','min:6','max:15'],
+            'confirmPassword' => ['required','same:password','min:6','max:15'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'role' => 'admin',
+            'password' => Hash::make($request->password),
+        ]);
+
+         // Success alert
+         Alert::success('Add New Admin', 'New Admin Account Added Successfully!');
+
+        return to_route('accountProfile');
     }
 
     //account edit page

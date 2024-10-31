@@ -42,7 +42,7 @@
 
                             <!-- Role -->
                             <div class="mb-2">
-                                <h5>Role : {{ Auth::user()->role }}</h5>
+                                <h5>Role : <span class="text-danger">{{ Auth::user()->role }}</span></h5>
                             </div>
 
                             <!-- Submit Button -->

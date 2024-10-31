@@ -30,4 +30,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('accountEdit', [ProfileController::class, 'accountEdit'])->name('accountEdit');
         Route::post('accountUpdate',[ProfileController::class,'accountUpdate'])->name('accountUpdate');
     });
+
+    //new admin creation
+    Route::group(['prefix' => 'newAdmin' , 'middleware' => 'checkSuperadmin'], function () {
+        Route::get('add', [ProfileController::class, 'newAdminPage'])->name('newAdminPage');
+        Route::post('add', [ProfileController::class, 'createAdminAccount'])->name('createAdminAccount');
+    });
 });
