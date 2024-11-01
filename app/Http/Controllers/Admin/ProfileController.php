@@ -25,15 +25,65 @@ class ProfileController extends Controller
         return view("admin.adminAccount.create");
     }
 
+    //admin list page
+    public function adminListPage()
+    {
+        $admins = User::when(request('searchKey'), function ($query) {
+            $query->where(function ($q) {
+                $searchKey = '%' . request('searchKey') . '%';
+                $q->whereAny(['name', 'email', 'phone', 'address'], 'like', $searchKey);
+            });
+        })
+            ->select('id', 'name', 'email', 'address', 'phone', 'role', 'created_at')
+            ->where('role', 'admin')
+            ->paginate(5);
+
+        return view('admin.adminAccount.list', compact('admins'));
+    }
+
+    //user list page
+    public function userListPage()
+    {
+        $users = User::when(request('searchKey'), function ($query) {
+            $query->where(function ($q) {
+                $searchKey = '%' . request('searchKey') . '%';
+                $q->whereAny(['name', 'email', 'phone', 'address'], 'like', $searchKey);
+            });
+        })
+            ->select('id', 'name', 'email', 'address', 'phone', 'role', 'created_at')
+            ->where('role', 'user')
+            ->paginate(5);
+
+        return view('admin.adminAccount.userList', compact('users'));
+    }
+
+    //delete admin account
+    public function deleteAdmin(Request $request)
+    {
+        $admin = User::findOrFail($request->id);
+        $admin->delete();
+        Alert::success('Admin Account Delete', 'Admin Account Deleted Successfully!');
+        return back();
+    }
+
+    //delete user account
+    public function deleteUser(Request $request)
+    {
+        $user = User::findOrFail($request->id);
+        $user->delete();
+        Alert::success('User Account Delete', 'User Account Deleted Successfully!');
+        return back();
+    }
+
     //create new admin account
     public function createAdminAccount(Request $request)
     {
         $fields = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required','email','unique:users,email'],
-            'phone' => ['required','min:8','max:15','unique:users,phone'],
-            'password' => ['required','min:6','max:15'],
-            'confirmPassword' => ['required','same:password','min:6','max:15'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'phone' => ['required', 'min:8', 'max:15', 'unique:users,phone'],
+            'password' => ['required', 'min:6', 'max:15'],
+            'confirmPassword' => ['required', 'same:password', 'min:6', 'max:15'],
         ]);
 
         $user = User::create([
@@ -44,10 +94,10 @@ class ProfileController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-         // Success alert
-         Alert::success('Add New Admin', 'New Admin Account Added Successfully!');
+        // Success alert
+        Alert::success('Add New Admin', 'New Admin Account Added Successfully!');
 
-        return to_route('accountProfile');
+        return to_route("adminListPage");
     }
 
     //account edit page
@@ -105,7 +155,7 @@ class ProfileController extends Controller
     {
         $fields = $request->validate([
             'currentPassword' => 'required',
-            'newPassword' => 'required|min:6|max:12',
+            'newPassword' => 'required|min:6|max:20',
             'confirmPassword' => 'required|same:newPassword'
         ]);
 

@@ -35,5 +35,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::group(['prefix' => 'newAdmin' , 'middleware' => 'checkSuperadmin'], function () {
         Route::get('add', [ProfileController::class, 'newAdminPage'])->name('newAdminPage');
         Route::post('add', [ProfileController::class, 'createAdminAccount'])->name('createAdminAccount');
+        Route::get('list', [ProfileController::class, 'adminListPage'])->name('adminListPage');
+        Route::get('delete/{id}',[ProfileController::class,'deleteAdmin'])->name('deleteAdmin');
+        Route::get('userList', [ProfileController::class, 'userListPage'])->name('userListPage');
+        Route::get('user/delete/{id}',[ProfileController::class,'deleteUser'])->name('deleteUser');
+
     });
 });

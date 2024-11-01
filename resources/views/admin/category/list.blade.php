@@ -25,7 +25,7 @@
             </div>
             <div class="col-6 offset-1">
                 <table class="table">
-                    <thead class="bg-primary text-white">
+                    <thead class="bg-dark text-white">
                         <tr>
                             <th scope="col">Id</th>
                             <th scope="col">Name</th>
