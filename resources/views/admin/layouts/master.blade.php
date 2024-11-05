@@ -37,11 +37,11 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Code Lab Studio</div>
+                <div class="mx-3 sidebar-brand-text">Code Lab Studio</div>
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="my-0 sidebar-divider">
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
@@ -58,12 +58,12 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa-solid fa-layer-group"></i><span>Product Details
+                <a class="nav-link" href="{{ route('productListPage') }}"><i class="fa-solid fa-layer-group"></i><span>Product Details
                     </span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa-solid fa-plus"></i></i><span>Add Item </span></a>
+                <a class="nav-link" href="{{ route('createProduct') }}"><i class="fa-solid fa-plus"></i></i><span>Add Item </span></a>
             </li>
 
             <li class="nav-item">
@@ -108,12 +108,12 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="mb-4 bg-white shadow navbar navbar-expand navbar-light topbar static-top">
 
 
 
                     <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="ml-auto navbar-nav">
 
 
                         <!-- Nav Item - User Information -->
@@ -121,40 +121,40 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
-                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                    class="mr-2 text-gray-600 d-none d-lg-inline small">{{ Auth::user()->name }}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{{ asset(Auth::user()->profile == null ? 'admin/img/undraw_profile.svg' : 'storage/profile/' . Auth::user()->profile) }}">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="shadow dropdown-menu dropdown-menu-right animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{{ route('accountProfile') }}">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    <i class="mr-2 text-gray-400 fas fa-user fa-sm fa-fw"></i>
                                     Profile
                                 </a>
                                 @if (Auth::user()->role == 'superadmin')
                                     <a class="dropdown-item" href="{{ route('newAdminPage') }}">
-                                        <i class="fa-solid fa-user-plus mr-2 text-gray-400"></i>
+                                        <i class="mr-2 text-gray-400 fa-solid fa-user-plus"></i>
                                         Add New Admin
                                     </a>
                                     <a class="dropdown-item" href="{{ route("adminListPage") }}">
-                                        <i class="fa-solid fa-users mr-2 text-gray-400"></i>
+                                        <i class="mr-2 text-gray-400 fa-solid fa-users"></i>
                                         Admin List
                                     </a>
                                 @endif
                                 <a class="dropdown-item" href="{{ route("userListPage") }}">
-                                    <i class="fa-solid fa-users mr-2 text-gray-400"></i>
+                                    <i class="mr-2 text-gray-400 fa-solid fa-users"></i>
                                     User List
                                 </a>
                                 <a class="dropdown-item" href="{{ route('changePasswordPage') }}">
-                                    <i class="fa-solid fa-lock fa-sm fa-fw mr-2 text-gray-400"></i></i></i>
+                                    <i class="mr-2 text-gray-400 fa-solid fa-lock fa-sm fa-fw"></i></i></i>
                                     Change Password
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <span class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
                                     <form action="{{ route('logout') }}" method="post">
                                         @csrf
-                                        <input type="submit" value="Logout" class="w-100 btn btn-dark text-white">
+                                        <input type="submit" value="Logout" class="text-white w-100 btn btn-dark">
                                     </form>
                                 </span>
                             </div>
@@ -171,7 +171,7 @@
 
 
                 <!-- Scroll to Top Button-->
-                <a class="scroll-to-top rounded" href="#page-top">
+                <a class="rounded scroll-to-top" href="#page-top">
                     <i class="fas fa-angle-up"></i>
                 </a>
 

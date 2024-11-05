@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Admin\ProfileController;
 
 // Route::prefix('admin')->middleware('admin')->group(function () {
 //     Route::get('dashboard', [AdminController::class, 'adminDashboard'])->name('adminDashboard');
@@ -28,17 +29,23 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::post('changePassword', [ProfileController::class, 'changePassword'])->name('changePassword');
         Route::get('accountProfile', [ProfileController::class, 'accountProfile'])->name('accountProfile');
         Route::get('accountEdit', [ProfileController::class, 'accountEdit'])->name('accountEdit');
-        Route::post('accountUpdate',[ProfileController::class,'accountUpdate'])->name('accountUpdate');
+        Route::post('accountUpdate', [ProfileController::class, 'accountUpdate'])->name('accountUpdate');
     });
 
     //new admin creation
-    Route::group(['prefix' => 'newAdmin' , 'middleware' => 'checkSuperadmin'], function () {
+    Route::group(['prefix' => 'newAdmin', 'middleware' => 'checkSuperadmin'], function () {
         Route::get('add', [ProfileController::class, 'newAdminPage'])->name('newAdminPage');
         Route::post('add', [ProfileController::class, 'createAdminAccount'])->name('createAdminAccount');
         Route::get('list', [ProfileController::class, 'adminListPage'])->name('adminListPage');
-        Route::get('delete/{id}',[ProfileController::class,'deleteAdmin'])->name('deleteAdmin');
+        Route::get('delete/{id}', [ProfileController::class, 'deleteAdmin'])->name('deleteAdmin');
         Route::get('userList', [ProfileController::class, 'userListPage'])->name('userListPage');
-        Route::get('user/delete/{id}',[ProfileController::class,'deleteUser'])->name('deleteUser');
+        Route::get('user/delete/{id}', [ProfileController::class, 'deleteUser'])->name('deleteUser');
+    });
 
+    //product
+    Route::group(['prefix' => 'product'], function () {
+        Route::get('create', [ProductController::class, 'create'])->name('createProduct');
+        Route::post('store', [ProductController::class, 'store'])->name('storeProduct');
+        Route::get('list', [ProductController::class, 'productListPage'])->name('productListPage');
     });
 });
