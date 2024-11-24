@@ -17,7 +17,8 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
 
-            if (Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin')) {
+        if (Auth::check()) {
+            if (Auth::user()->role == "superadmin" || Auth::user()->role == "admin") {
 
                 // If the user is trying to access login or register while authenticated as admin or superadmin
                 if (in_array($request->route()->getName(), ['login', 'register'])) {
@@ -26,8 +27,10 @@ class AdminMiddleware
 
                 return $next($request);
             }
+        } else {
+            return $next($request);
+        }
 
-            // Optionally, you might want to redirect non-admin users to a different page
-            return back();
+        return back();
     }
 }
