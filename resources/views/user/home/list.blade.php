@@ -41,12 +41,12 @@
                     <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="rounded carousel-item active">
-                                <img src="img/hero-img-1.png" class="rounded img-fluid w-100 h-100 bg-secondary"
+                                <img src="{{asset('user/img/hero-img-1.png')}}" class="rounded img-fluid w-100 h-100 bg-secondary"
                                     alt="First slide">
                                 <a href="#" class="px-4 py-2 text-white rounded btn">Fruites</a>
                             </div>
                             <div class="rounded carousel-item">
-                                <img src="img/hero-img-2.jpg" class="rounded img-fluid w-100 h-100" alt="Second slide">
+                                <img src="{{asset('user/img/hero-img-2.jpg')}}" class="rounded img-fluid w-100 h-100" alt="Second slide">
                                 <a href="#" class="px-4 py-2 text-white rounded btn">Vesitables</a>
                             </div>
                         </div>
@@ -131,17 +131,17 @@
                         <h1>Our Organic Products</h1>
                     </div>
                     <div class="col-lg-8 text-end">
-                        <ul class="mb-5 text-center nav nav-pills d-inline-flex">
+                        <ul class="mb-5 text-center nav d-inline-flex">
                             <li class="nav-item">
-                                <a class="py-2 m-2 d-flex bg-light rounded-pill active" data-bs-toggle="pill"
-                                    href="#tab-1">
+                                <a class="py-2 m-2 d-flex bg-light rounded-pill active"
+                                    href="{{ route('userHome') }}">
                                     <span class="text-dark" style="width: 130px;">All Products</span>
                                 </a>
                             </li>
                             @foreach ($categories as $category)
                                 <li class="nav-item">
-                                    <a class="py-2 m-2 d-flex bg-light rounded-pill" data-bs-toggle="pill"
-                                        href="#tab-2">
+                                    <a class="py-2 m-2 d-flex bg-light rounded-pill"
+                                        href="{{ route('userHome' , $category->id) }}">
                                         <span class="text-dark" style="width: 130px;">{{ $category->name }}</span>
                                     </a>
                                 </li>
