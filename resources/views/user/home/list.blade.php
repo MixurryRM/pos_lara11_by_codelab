@@ -30,23 +30,26 @@
                     <h4 class="mb-3 text-secondary">100% Organic Foods</h4>
                     <h1 class="mb-5 display-3 text-primary">Organic Veggies & Fruits Foods</h1>
                     <div class="mx-auto position-relative">
-                        <input class="px-4 py-3 border-2 form-control border-secondary w-75 rounded-pill" type="number"
-                            placeholder="Search">
-                        <button type="submit"
-                            class="px-4 py-3 text-white border-2 btn btn-primary border-secondary position-absolute rounded-pill h-100"
-                            style="top: 0; right: 25%;">Submit Now</button>
+                        <form action="{{ route('userHome') }}" method="get">
+                            <input class="px-4 py-3 border-2 form-control border-secondary w-75 rounded-pill" type="text"
+                                placeholder="Search" name="searchKey">
+                            <button type="submit"
+                                class="px-4 py-3 text-white border-2 btn btn-primary border-secondary position-absolute rounded-pill h-100"
+                                style="top: 0; right: 25%;">Submit Now</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-12 col-lg-5">
                     <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="rounded carousel-item active">
-                                <img src="{{asset('user/img/hero-img-1.png')}}" class="rounded img-fluid w-100 h-100 bg-secondary"
-                                    alt="First slide">
+                                <img src="{{ asset('user/img/hero-img-1.png') }}"
+                                    class="rounded img-fluid w-100 h-100 bg-secondary" alt="First slide">
                                 <a href="#" class="px-4 py-2 text-white rounded btn">Fruites</a>
                             </div>
                             <div class="rounded carousel-item">
-                                <img src="{{asset('user/img/hero-img-2.jpg')}}" class="rounded img-fluid w-100 h-100" alt="Second slide">
+                                <img src="{{ asset('user/img/hero-img-2.jpg') }}" class="rounded img-fluid w-100 h-100"
+                                    alt="Second slide">
                                 <a href="#" class="px-4 py-2 text-white rounded btn">Vesitables</a>
                             </div>
                         </div>
@@ -131,22 +134,35 @@
                         <h1>Our Organic Products</h1>
                     </div>
                     <div class="col-lg-8 text-end">
-                        <ul class="mb-5 text-center nav d-inline-flex">
+                        <ul class="mb-3 text-center nav d-inline-flex">
                             <li class="nav-item">
-                                <a class="py-2 m-2 d-flex bg-light rounded-pill active"
-                                    href="{{ route('userHome') }}">
+                                <a class="py-2 m-2 d-flex bg-light rounded-pill @if (!request('categoryId')) active @endif"
+                                    href="{{ url('user/home') }}">
                                     <span class="text-dark" style="width: 130px;">All Products</span>
                                 </a>
                             </li>
                             @foreach ($categories as $category)
                                 <li class="nav-item">
-                                    <a class="py-2 m-2 d-flex bg-light rounded-pill"
-                                        href="{{ route('userHome' , $category->id) }}">
+                                    <a class="py-2 m-2 d-flex bg-light rounded-pill @if (request('categoryId') == $category->id) active @endif"
+                                        href="{{ url('user/home?categoryId=' . $category->id) }}">
                                         <span class="text-dark" style="width: 130px;">{{ $category->name }}</span>
                                     </a>
                                 </li>
                             @endforeach
                         </ul>
+                        <div class="mb-5">
+                            <form action="{{ route('userHome') }}" method="get">
+                                <div class="w-75 d-flex">
+                                    <input type="text" class="form-control" value="{{ request('minPrice') }}"
+                                        name="minPrice" placeholder='Minimun Price ...'>
+                                    <input type="text" class="form-control" style="margin-left: 0.5rem"
+                                        value="{{ request('maxPrice') }}" name="maxPrice"
+                                        placeholder='Maximun Price ...'>
+                                    <button type="submit" class="text-white btn btn-warning"
+                                        style="margin-left: 0.5rem">Search</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-content">
@@ -154,30 +170,35 @@
                         <div class="row g-4">
                             <div class="col-lg-12">
                                 <div class="row g-4">
-                                    @foreach ($products as $product)
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                <img src="{{asset('product/' . $product->image)}}" class="img-fluid w-100 rounded-top"
-                                                    alt="">
-                                            </div>
-                                            <div class="px-3 py-1 text-white rounded bg-secondary position-absolute"
-                                                style="top: 10px; left: 10px;">{{$product->category->name}}</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>{{$product->name}}</h4>
-                                                <p>{{ Str::words($product->description, 10, '...') }}</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="mb-0 text-dark fs-5 fw-bold">{{$product->price}} mmk</p>
-                                                    <a href="#"
-                                                        class="px-3 border btn border-secondary rounded-pill text-primary"><i
-                                                            class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                                                        cart</a>
+                                    @forelse ($products as $product)
+                                        <div class="col-md-6 col-lg-4 col-xl-3">
+                                            <div class="rounded position-relative fruite-item">
+                                                <div class="fruite-img">
+                                                    <img src="{{ asset('product/' . $product->image) }}"
+                                                        class="img-fluid w-100 rounded-top" alt=""
+                                                        style="height: 320px">
+                                                </div>
+                                                <div class="px-3 py-1 text-white rounded bg-secondary position-absolute"
+                                                    style="top: 10px; left: 10px;">{{ $product->category->name }}</div>
+                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                    <h4>{{ $product->name }}</h4>
+                                                    <p>{{ Str::words($product->description, 10, '...') }}</p>
+                                                    <div class="d-flex justify-content-between flex-lg-wrap">
+                                                        <p class="mb-0 text-dark fs-5 fw-bold">{{ $product->price }} mmk
+                                                        </p>
+                                                        <a href="#"
+                                                            class="px-3 border btn border-secondary rounded-pill text-primary"><i
+                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add to
+                                                            cart</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @endforeach
+                                    @empty
+                                        <h1 class="p-4 text-white bg-warning">No products found!</h1>
+                                    @endforelse
                                 </div>
+                                <span class="">{{ $products->links() }}</span>
                             </div>
                         </div>
                     </div>
@@ -188,8 +209,8 @@
                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                         <div class="rounded position-relative fruite-item">
                                             <div class="fruite-img">
-                                                <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top"
-                                                    alt="">
+                                                <img src="{{ asset('user/img/fruite-item-5.jpg') }}"
+                                                    class="img-fluid w-100 rounded-top" alt="">
                                             </div>
                                             <div class="px-3 py-1 text-white rounded bg-secondary position-absolute"
                                                 style="top: 10px; left: 10px;">Fruits</div>
