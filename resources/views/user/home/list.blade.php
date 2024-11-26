@@ -150,8 +150,9 @@
                                 </li>
                             @endforeach
                         </ul>
-                        <div class="mb-5">
+                        <div class="mb-3">
                             <form action="{{ route('userHome') }}" method="get">
+                                @csrf
                                 <div class="w-75 d-flex">
                                     <input type="text" class="form-control" value="{{ request('minPrice') }}"
                                         name="minPrice" placeholder='Minimun Price ...'>
@@ -160,6 +161,23 @@
                                         placeholder='Maximun Price ...'>
                                     <button type="submit" class="text-white btn btn-warning"
                                         style="margin-left: 0.5rem">Search</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="mb-5">
+                            <form action="{{ route('userHome') }}" method="get">
+                                @csrf
+                                <div class="w-50 d-flex">
+                                    <select name="sortingType" class="form-control">
+                                        <option value="name,asc">Alphabet A - Z</option>
+                                        <option value="name,desc">Alphabet Z - A</option>
+                                        <option value="price,asc">Price Lowest - Hightest</option>
+                                        <option value="price,desc">Price Highest - Lowest</option>
+                                        <option value="created_at,asc">Date Asc - Desc</option>
+                                        <option value="created_at,desc">Date Desc - Asc</option>
+                                    </select>
+                                    <input type="submit" value="Sort Product" class="text-white btn btn-warning"
+                                        style="margin-left: 0.5rem">
                                 </div>
                             </form>
                         </div>
@@ -198,9 +216,11 @@
                                         <h1 class="p-4 text-white bg-warning">No products found!</h1>
                                     @endforelse
                                 </div>
-                                <span class="">{{ $products->links() }}</span>
                             </div>
                         </div>
+                        {{-- <div class="d-flex">
+                            <span class="">{{ $products->links() }}</span>
+                        </div> --}}
                     </div>
                     <div id="tab-2" class="p-0 tab-pane fade show">
                         <div class="row g-4">

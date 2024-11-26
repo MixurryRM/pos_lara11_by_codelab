@@ -12,9 +12,16 @@ class UserController extends Controller
     public function userHome()
     {
         $categories = Category::get();
+
         $products = Product::with('category')
             ->when(request('searchKey'), function ($query) {
                 $query->where('products.name', 'like', '%' . request('searchKey') . '%');
+            })
+            ->when(request('sortingType'), function ($query) {
+                $sortRule = explode(",", request(('sortingType')));
+                $sortName = 'products.' . $sortRule[0];
+                $sortBy = $sortRule[1];
+                $query->orderBy($sortName, $sortBy);
             })
             ->when(request('categoryId'), function ($query) { //filter by catgory_id
                 $query->where('category_id', request('categoryId'));
@@ -28,7 +35,7 @@ class UserController extends Controller
             ->when(request('maxPrice') != null && request('minPrice') == null, function ($query) { //max == true | min == false
                 $query->where('price', '<=', request('maxPrice'));
             })
-            ->orderBy('created_at', 'desc')->paginate(8);
+            ->get();
         return view('user.home.list', compact('categories', 'products'));
     }
 }
