@@ -69,47 +69,43 @@
                 </button>
                 <div class="bg-white collapse navbar-collapse" id="navbarCollapse">
                     <div class="mx-auto navbar-nav">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
+                        <a href="{{ route('userHome') }}"
+                            class="nav-item nav-link @if (Request::route()->getName() == 'userHome') active @endif">Home</a>
                         <a href="shop.html" class="nav-item nav-link">Shop</a>
                         <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="m-0 dropdown-menu bg-secondary rounded-0">
-                                <a href="cart.html" class="dropdown-item">Cart</a>
-                                <a href="chackout.html" class="dropdown-item">Chackout</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Page</a>
-                            </div>
-                        </div>
                         <a href="contact.html" class="nav-item nav-link">Contact</a>
-                        <span class="nav-item nav-link">
-                            <form action="{{ route('logout') }}" method="post">
-                                @csrf
-                                <input type="submit" value="Logout" class="rounded btn btn-success btn-sm">
-                            </form>
-                        </span>
                     </div>
                     <div class="m-3 d-flex me-0">
-                        <button
-                            class="bg-white border btn-search btn border-secondary btn-md-square rounded-circle me-4"
-                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                class="fas fa-search text-primary"></i></button>
                         <a href="#" class="my-auto position-relative me-4">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="px-1 position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark"
                                 style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                         </a>
-                        <a href="#" class="my-auto">
-                            <i class="fas fa-user fa-2x"></i>
-                        </a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <img style="height: 3rem"
+                                    src="{{ asset(Auth::user()->profile != null ? 'storage/profile/' . Auth::user()->profile : 'admin/img/undraw_profile.svg') }}"><span
+                                    style="margin-left: 1rem">{{ Auth::user()->name != '' ? Auth::user()->name : Auth::user()->nickname }}</span>
+                            </a>
+                            <div class="m-0 dropdown-menu bg-secondary rounded-0">
+                                <a href="{{ route('userEditPage') }}" class="dropdown-item">Edit Profile</a>
+                                <a href="{{ route('userChangePassword') }}" class="dropdown-item">Change
+                                    Password</a>
+                                <span class="dropdown-item">
+                                    <form action="{{ route('logout') }}" method="post">
+                                        @csrf
+                                        <input type="submit" value="Logout" class="rounded btn btn-success">
+                                    </form>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </nav>
         </div>
     </div>
     <!-- Navbar End -->
-
 
     @yield('content')
 
@@ -229,6 +225,18 @@
     <script src="{{ asset('user/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('user/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('user/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+    <!--image preview javascript -->
+    <script>
+        var loadFile = function(event) {
+            // Get the img element by id
+            var output = document.getElementById('previewImage');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+                URL.revokeObjectURL(output.src); // Free memory
+            };
+        };
+    </script>
 
     <!-- Template Javascript -->
     <script src="{{ asset('user/js/main.js') }}"></script>
