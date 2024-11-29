@@ -5,7 +5,7 @@
         <div class="container vh-75 d-flex justify-content-center align-items-center" style="margin-top: 2rem">
             <div class="p-5 shadow card" style="width: 100%; max-width: 700px;">
                 <h3 class="mb-4 text-center text-primary">Account Edition</h3>
-                <form action="{{route('userEdit')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('userEdit') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!-- Profile Image -->
                     <div class="d-flex">

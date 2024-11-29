@@ -5,7 +5,7 @@
         <div class="container vh-75 d-flex justify-content-center align-items-center" style="margin-top: 5rem">
             <div class="p-4 shadow card" style="width: 100%; max-width: 600px;">
                 <h3 class="mb-4 text-center">Change Password</h3>
-                <form action="{{route('userChangePassword')}}" method="POST">
+                <form action="{{ route('userChangePassword') }}" method="POST">
                     @csrf
                     <!-- Current Password -->
                     <div class="mb-3">

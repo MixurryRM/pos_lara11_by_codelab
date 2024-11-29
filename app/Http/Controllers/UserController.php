@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -86,7 +87,33 @@ class UserController extends Controller
         return view('user.home.changePassword');
     }
 
-    public function changePassword(Request $request){
-        dd($request->all());
+    public function changePassword(Request $request)
+    {
+        $fields = $request->validate([
+            'currentPassword' => 'required',
+            'newPassword' => 'required|min:6|max:20',
+            'confirmPassword' => 'required|same:newPassword'
+        ]);
+
+        $dbHashPassword = Auth::user()->password;
+        $authId = Auth::user()->id;
+
+        if (Hash::check($request->currentPassword, $dbHashPassword)) {
+
+            $data = ['password' => Hash::make($request->newPassword)];
+
+            User::where('id', $authId)->update($data);
+
+            Alert::success('Password Change', 'Password Changed Successfully!');
+
+            Auth::logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect('/');
+        } else {
+            abort(404);
+        }
     }
 }
