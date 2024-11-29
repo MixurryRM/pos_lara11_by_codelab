@@ -90,7 +90,7 @@
                             </a>
                             <div class="m-0 dropdown-menu bg-secondary rounded-0">
                                 <a href="{{ route('userEditPage') }}" class="dropdown-item">Edit Profile</a>
-                                <a href="{{ route('userChangePassword') }}" class="dropdown-item">Change
+                                <a href="{{ route('userChangePasswordPage') }}" class="dropdown-item">Change
                                     Password</a>
                                 <span class="dropdown-item">
                                     <form action="{{ route('logout') }}" method="post">
