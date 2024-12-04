@@ -192,9 +192,11 @@
                                         <div class="col-md-6 col-lg-4 col-xl-3">
                                             <div class="rounded position-relative fruite-item">
                                                 <div class="fruite-img">
-                                                    <img src="{{ asset('product/' . $product->image) }}"
-                                                        class="img-fluid w-100 rounded-top" alt=""
-                                                        style="height: 320px">
+                                                    <a href="{{ route('productDetail' , [$product->id, $product->category_id]) }}">
+                                                        <img src="{{ asset('product/' . $product->image) }}"
+                                                            class="img-fluid w-100 rounded-top" alt=""
+                                                            style="height: 320px">
+                                                    </a>
                                                 </div>
                                                 <div class="px-3 py-1 text-white rounded bg-secondary position-absolute"
                                                     style="top: 10px; left: 10px;">{{ $product->category->name }}</div>

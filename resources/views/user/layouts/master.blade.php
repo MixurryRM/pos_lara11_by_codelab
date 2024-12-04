@@ -71,9 +71,9 @@
                     <div class="mx-auto navbar-nav">
                         <a href="{{ route('userHome') }}"
                             class="nav-item nav-link @if (Request::route()->getName() == 'userHome') active @endif">Home</a>
-                        <a href="shop.html" class="nav-item nav-link">Shop</a>
-                        <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="#" class="nav-item nav-link">Shop</a>
+                        <a href="#" class="nav-item nav-link">Shop Detail</a>
+                        <a href="#" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="m-3 d-flex me-0">
                         <a href="#" class="my-auto position-relative me-4">
