@@ -13,5 +13,7 @@ Route::prefix('user')->middleware('user')->group(function () {
 
     Route::prefix('product')->group((function () {
         Route::get('detail/{id}/{categoryId}',[ProductController::class,'productDetail'])->name('productDetail');
+        Route::post('addToCart',[ProductController::class,'addToCart'])->name('productAddToCart');
+        Route::get('cartList',[ProductController::class,'cartList'])->name('cartList');
     }));
 });

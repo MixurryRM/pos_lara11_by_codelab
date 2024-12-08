@@ -76,11 +76,11 @@
                         <a href="#" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="m-3 d-flex me-0">
-                        <a href="#" class="my-auto position-relative me-4">
+                        <a href="{{ route('cartList') }}" class="my-auto position-relative me-4">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="px-1 position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">0</span>
                         </a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -183,7 +183,7 @@
                         <p>Email: Example@gmail.com</p>
                         <p>Phone: +0123 4567 8910</p>
                         <p>Payment Accepted</p>
-                        <img src="img/payment.png" class="img-fluid" alt="">
+                        <img src="{{ asset('user/img/payment.png') }}" class="img-fluid" alt="">
                     </div>
                 </div>
             </div>
@@ -219,12 +219,16 @@
 
 
     <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('user/lib/easing/easing.min.js') }}"></script>
     <script src="{{ asset('user/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('user/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('user/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+    <!-- Jquery -->
+    @yield('js-section')
+
 
     <!--image preview javascript -->
     <script>
