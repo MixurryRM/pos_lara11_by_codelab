@@ -52,7 +52,8 @@
                                     <p class="mt-4 mb-0 total">{{ $item->price * $item->qty }} $</p>
                                 </td>
                                 <td>
-                                    <button class="mt-4 border btn btn-md rounded-circle bg-light">
+                                    <input type="hidden" class="productId" value="{{ $item->cart_id }}">
+                                    <button class="mt-4 border btn btn-md rounded-circle bg-light remove-btn">
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
                                 </td>
@@ -101,35 +102,56 @@
 @endsection
 
 @section('js-section')
-<script>
-    $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
 
-        $(".btn-minus").click(function() {
-            $parentNode = $(this).parents("tr");
-            $price = $parentNode.find('.price').text().replace('$','');
-            $qty =  $parentNode.find('.qty').val();
-            $total = $price * $qty;
-            $parentNode.find('.total').text($total + '$');
-            finalCalculation();
+            $(".btn-minus").click(function() {
+                $parentNode = $(this).parents("tr");
+                $price = $parentNode.find('.price').text().replace('$', '');
+                $qty = $parentNode.find('.qty').val();
+                $total = $price * $qty;
+                $parentNode.find('.total').text($total + '$');
+                finalCalculation();
+            });
+
+            $(".btn-plus").click(function() {
+                $parentNode = $(this).parents("tr");
+                $price = $parentNode.find('.price').text().replace('$', '');
+                $qty = $parentNode.find('.qty').val();
+                $total = $price * $qty;
+                $parentNode.find('.total').text($total + '$');
+                finalCalculation();
+            });
+
+            function finalCalculation() {
+                $total = 0;
+                $('#productTable tbody tr').each(function(index, item) {
+                    $total += Number($(item).find('.total').text().replace('$', ''))
+                })
+                $('.subTotal').html($total + '$')
+                $('.finalTotal').html($total + 100 + '$');
+            }
+
+            //remove btn
+            $('.remove-btn').click(function() {
+                $parentNode = $(this).parents('tr');
+                $cartId = $parentNode.find('.productId').val();
+
+                $data = {
+                    'cartId': $cartId
+                }
+
+                $.ajax({
+                    type: 'get',
+                    url: '/user/cart/delete',
+                    dataType: 'json',
+                    data: $data,
+                    success: function(res) {
+                        res.status == 'success' ? location.reload() : '';
+                    }
+                })
+            })
+
         });
-
-        $(".btn-plus").click(function() {
-            $parentNode = $(this).parents("tr");
-            $price = $parentNode.find('.price').text().replace('$','');
-            $qty =  $parentNode.find('.qty').val();
-            $total = $price * $qty;
-            $parentNode.find('.total').text($total + '$');
-            finalCalculation();
-        });
-
-        function finalCalculation(){
-            $total = 0;
-            $('#productTable tbody tr').each( function (index,item) {
-                $total += Number($(item).find('.total').text().replace('$',''))
-            } )
-            $('.subTotal').html($total + '$')
-            $('.finalTotal').html( $total + 100 + '$');
-        }
-    });
-</script>
+    </script>
 @endsection

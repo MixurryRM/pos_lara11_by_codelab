@@ -45,4 +45,14 @@ class ProductController extends Controller
 
         return view('user.home.cartList' , compact('cart', 'total'));
     }
+
+    public function cartDelete(Request $request){
+        // logger($request->cartId);
+        $cartId = $request->cartId;
+        Cart::where('id',$cartId)->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Successfully cart deleted!'
+        ],200);
+    }
 }
