@@ -16,4 +16,6 @@ Route::prefix('user')->middleware('user')->group(function () {
         Route::post('addToCart',[ProductController::class,'addToCart'])->name('productAddToCart');
         Route::get('cartList',[ProductController::class,'cartList'])->name('cartList');
     }));
+
+    Route::get('cart/delete',[ProductController::class,'cartDelete'])->name('cartDelete');
 });

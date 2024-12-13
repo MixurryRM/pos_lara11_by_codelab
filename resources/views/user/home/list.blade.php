@@ -192,7 +192,8 @@
                                         <div class="col-md-6 col-lg-4 col-xl-3">
                                             <div class="rounded position-relative fruite-item">
                                                 <div class="fruite-img">
-                                                    <a href="{{ route('productDetail' , [$product->id, $product->category_id]) }}">
+                                                    <a
+                                                        href="{{ route('productDetail', [$product->id, $product->category_id]) }}">
                                                         <img src="{{ asset('product/' . $product->image) }}"
                                                             class="img-fluid w-100 rounded-top" alt=""
                                                             style="height: 320px">
@@ -203,12 +204,12 @@
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                     <h4>{{ $product->name }}</h4>
                                                     <p>{{ Str::words($product->description, 10, '...') }}</p>
-                                                    <div class="d-flex justify-content-between flex-lg-wrap">
-                                                        <p class="mb-0 text-dark fs-5 fw-bold">{{ $product->price }} mmk
+                                                    <div class="d-flex">
+                                                        <p class="mb-0 text-dark fs-5 fw-bold me-3">{{ $product->price }}$
                                                         </p>
-                                                        <a href="#"
+                                                        <a href="#" style="width: 15rem"
                                                             class="px-3 border btn border-secondary rounded-pill text-primary"><i
-                                                                class="fa fa-shopping-bag me-2 text-primary"></i> Add to
+                                                                class="fa fa-shopping-bag me-1 text-primary"></i> Add to
                                                             cart</a>
                                                     </div>
                                                 </div>
